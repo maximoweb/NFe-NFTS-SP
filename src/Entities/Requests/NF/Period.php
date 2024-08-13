@@ -21,11 +21,9 @@ class Period implements UserRequest
     public $dtInicio;
     public $dtFim;
     public $pagina;
-    public $transacao;
 
     public function __construct()
     {
-        $this->transacao = 'false';
         $this->pagina = 1;
     }
 
@@ -126,22 +124,6 @@ class Period implements UserRequest
         $this->pagina = $pagina;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTransacao()
-    {
-        return $this->transacao;
-    }
-
-    /**
-     * @param mixed $transacao
-     */
-    public function setTransacao($transacao)
-    {
-        $this->transacao = $transacao;
-    }
-
     public function toArray()
     {
         return [
@@ -151,7 +133,8 @@ class Period implements UserRequest
             HeaderEnum::START_DATE => $this->dtInicio,
             HeaderEnum::END_DATE => $this->dtFim,
             HeaderEnum::PAGE_NUMBER => $this->pagina,
-            HeaderEnum::TRANSACTION => $this->transacao,
+            HeaderEnum::CPFCNPJ => $this->cnpj
+            //HeaderEnum::TRANSACTION => $this->transacao,
         ];
     }
 }
