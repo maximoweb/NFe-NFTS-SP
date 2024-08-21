@@ -49,14 +49,14 @@ class NfService
     {
         $builder = new PedidoConsultaCNPJ;
         $outputClass = new CnpjInformationFactory;
-        return $this->processRequest($baseInformation, [], NfMethods::CONSULTA_CNPJ, $builder, $outputClass);
+        return $this->processRequest($baseInformation, [], NfMethods::CONSULTA_CNPJ, $builder, false,$outputClass);
     }
 
-    private function processRequest(BaseInformation $information, $params, $method, InputTransformer $builder, OutputClass $outputClass = null)
+    private function processRequest(BaseInformation $information, $params, $method, InputTransformer $builder, $changeModelSender = false, OutputClass $outputClass = null)
     {
         // Check Output Type
         $outputClass = !empty($outputClass) ? $outputClass : $this->response;
-        $params = General::convertUserRequest($params);
+        if($changeModelSender == false) $params = General::convertUserRequest($params);
 
         //  File Without Signature
         $file = $builder->makeXmlRequest($information, $params);
@@ -105,7 +105,7 @@ class NfService
     public function sendNf(BaseInformation $baseInformation, $params)
     {
         $builder = new PedidoEnvioRPS();
-        return $this->processRequest($baseInformation, $params, NfMethods::ENVIO, $builder);
+        return $this->processRequest($baseInformation, $params, NfMethods::ENVIO, $builder, true);
     }
 
     public function sendLot(BaseInformation $baseInformation, $params)

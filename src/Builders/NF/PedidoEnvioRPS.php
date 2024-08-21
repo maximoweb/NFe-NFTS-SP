@@ -22,7 +22,9 @@ class PedidoEnvioRPS extends NfAbstract
 
         $request = array_merge($header, $allRps);
 
-        return Xml::makeRequestXML(NfMethods::ENVIO, $request);
+        $file = Xml::makeRequestXML(NfMethods::ENVIO, $request);
+        $file = str_replace('&#13;', '', $file);
+        return $file;
     }
 
 }
